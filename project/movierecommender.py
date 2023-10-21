@@ -52,7 +52,7 @@ async def on_message(message):
         response = f"hello!\n> welcome to movie recommender system\n> " \
                    f"${genre}\n> " \
                    "1: kids / 2: adult\n> " \
-                   "e.g.: $action 2"
+                   f"e.g.: ${genre.split(' / $')[1]} 2"
 
         await message.channel.send(response)
 
