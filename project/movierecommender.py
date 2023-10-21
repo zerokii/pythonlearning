@@ -8,13 +8,18 @@ MOVIE_GENRES = {
 }
 
 
+def get_genre():
+    genre_names = " / $".join([genre[1:] for genre in MOVIE_GENRES.keys()])
+    return genre_names
+
+
 def get_recommendation(text):
-    for meal, choices in MOVIE_GENRES.items():
-        if text.startswith(meal):
-            choice_number = text.split(meal)[-1].strip()
+    for genre, movies_name in MOVIE_GENRES.items():
+        if text.startswith(genre):
+            choice_number = text.split(genre)[-1].strip()
 
             try:
-                choice = choices[int(choice_number) - 1]
+                choice = movies_name[int(choice_number) - 1]
             except(ValueError, IndexError):
                 choice = "invalid choice, please use 1 or 2"
 
@@ -43,8 +48,9 @@ async def on_message(message):
     text = message.content.lower()
 
     if text.startswith("$hello"):
-        response = "hello!\n> welcome to movie recommender system\n> " \
-                   "$action / $comedy / $sci-fi\n> " \
+        genre = get_genre()
+        response = f"hello!\n> welcome to movie recommender system\n> " \
+                   f"${genre}\n> " \
                    "1: kids / 2: adult\n> " \
                    "e.g.: $action 2"
 
